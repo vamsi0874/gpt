@@ -54,7 +54,7 @@ const NewPrompt = ({ data }) => {
       //   }),
       // }).then((res) => res.json());
       
-        const response = await api.put(`/api/chats/${data._id}`, {
+        const response = await api.put(`/chats/${data._id}`, {
           question: question.length ? question : undefined,
           answer,
           img: img.dbData?.filePath || undefined,

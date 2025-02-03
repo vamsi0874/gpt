@@ -19,7 +19,7 @@ const DashboardPage = () => {
       //   body: JSON.stringify({ text }),
       // }).then((res) => res.json());
       {
-        const response = await api.post(`/api/chats`, { text });
+        const response = await api.post(`/chats`, { text });
          return response.data
       }
     },

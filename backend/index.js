@@ -45,7 +45,7 @@ const __dirname = path.dirname(__filename);
 //   credentials: true,
 // }));
 
-// app.use(cors());
+app.use(cors());
 
 
 
