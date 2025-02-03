@@ -26,12 +26,12 @@ const __dirname = path.dirname(__filename);
 // console.log(__filename)
 
 
-app.use(
-  cors({
-    origin: "https://gpt-front-two.vercel.app", // Allow only your frontend
-    credentials: true, // Allow cookies & authentication headers
-  })
-);
+// app.use(
+//   cors({
+//     origin: "https://gpt-front-two.vercel.app", // Allow only your frontend
+//     credentials: true, // Allow cookies & authentication headers
+//   })
+// );
 
 // app.use(cors(
 //   {
@@ -45,7 +45,7 @@ app.use(
 //   credentials: true,
 // }));
 
-// app.use(cors())
+app.use(cors())
 
 
 
