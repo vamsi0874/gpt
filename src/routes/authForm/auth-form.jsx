@@ -22,7 +22,7 @@ const AuthForm = () => {
   const [isSignup, setIsSignup] = useState(true);
   const { login, signup } = useAuth();
   const navigate = useNavigate();
-
+  
   const {
     register,
     handleSubmit,

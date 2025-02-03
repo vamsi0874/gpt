@@ -6,7 +6,7 @@ export default defineConfig({
   server : {
   proxy: {
     '/api':
-    'http://localhost:3000',
+    'https://gpt-back-w58g.onrender.com',
   }
 },
   plugins: [
