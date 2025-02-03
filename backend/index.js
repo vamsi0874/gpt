@@ -47,7 +47,16 @@ const __dirname = path.dirname(__filename);
 
 app.use(cors())
 
-
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://gpt-front-two.vercel.app'); // Or *
+  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
 
 
 
