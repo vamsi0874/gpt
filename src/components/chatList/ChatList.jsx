@@ -1,0 +1,58 @@
+import { Link } from "react-router-dom";
+import "./ChatList.css";
+import { useQuery } from "@tanstack/react-query";
+import api from "../../services/api";
+
+
+const ChatList = () => {
+
+
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ["userChats"],
+    queryFn: async () =>{
+    console.log('error',error)
+ 
+      const response = await api.get(`/api/userchats`)
+   
+      //  console.log('response',response)
+      return response.data
+    }
+     
+  });
+
+  return (
+    <div className="chatList">
+      <span className="title">DASHBOARD</span>
+      <Link to="/dashboard">Create a new Chat</Link>
+      <Link to="/">Explore VAMSI AI</Link>
+      {/* <Link to="/">Contact</Link> */}
+      <hr />
+      <span className="title">RECENT CHATS</span>
+      <div className="list">
+      {isPending
+  ? "Loading..."
+  : error
+  ? "Something went wrong!"
+  : data?.length === 0
+  ? "" 
+  : data?.map((chat) => (
+      <Link to={`/dashboard/chats/${chat._id}`} key={chat._id}>
+        {chat.title}
+      </Link>
+    ))}
+
+      </div>
+      <hr />
+      <div className="upgrade">
+        <img src="/logo.png" alt="" />
+        <div className="texts">
+          <span>Upgrade to VAMSI AI Pro</span>
+          <span>Get unlimited access to all features</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ChatList;
