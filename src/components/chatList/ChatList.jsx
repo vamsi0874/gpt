@@ -13,7 +13,8 @@ const ChatList = () => {
     queryFn: async () =>{
     console.log('error',error)
  
-      const response = await api.get(`/api/userchats`)
+      // const response = await api.get(`/api/userchats`)
+      const response = await api.get(`/userchats`)
    
       //  console.log('response',response)
       return response.data

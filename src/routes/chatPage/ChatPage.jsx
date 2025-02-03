@@ -19,7 +19,8 @@ const ChatPage = () => {
       //   credentials: "include",
       // }).then((res) => res.json()),
       {
-        const response = await api.get(`/api/chats/${chatId}`);
+        // const response = await api.get(`/api/chats/${chatId}`);
+        const response = await api.get(`/chats/${chatId}`);
          return response.data
       }
   });

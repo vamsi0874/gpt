@@ -35,7 +35,7 @@ const __dirname = path.dirname(__filename);
 
 // app.use(cors(
 //   {
-//     origin:true,
+//     origin:'http://localhost:5173/',
 //     credentials:true
 //   }
 // ));
@@ -45,18 +45,9 @@ const __dirname = path.dirname(__filename);
 //   credentials: true,
 // }));
 
-app.use(cors())
+// app.use(cors());
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://gpt-front-two.vercel.app'); // Or *
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  if (req.method === 'OPTIONS') {
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-});
+
 
 
 
@@ -78,7 +69,7 @@ const imagekit = new ImageKit({
 });
 
 
-app.post("/users/signup", async (req, res) => {
+app.post("/api/users/signup", async (req, res) => {
   try {
     // console.log('req.body',req.body)
     const parsedData = registerSchema.parse(req.body);
@@ -107,7 +98,7 @@ app.post("/users/signup", async (req, res) => {
 });
 
 // @route   POST /api/auth/login
-app.post("/users/login", async (req, res) => {
+app.post("/api/users/login", async (req, res) => {
   try {
     const parsedData = loginSchema.parse(req.body);
 
@@ -200,6 +191,7 @@ app.get("/api/userchats",protectRoute,async (req, res) => {
     res.status(500).send("Error fetching userchats!");
   }
 });
+
 
 app.get("/api/chats/:id",protectRoute, async (req, res) => {
   const userId = req.user.userId;
