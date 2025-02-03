@@ -26,12 +26,12 @@ const __dirname = path.dirname(__filename);
 // console.log(__filename)
 
 
-// app.use(
-//   cors({
-//      origin: 'https://chatgpt-clone-client.onrender.com',
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: "https://gpt-front-two.vercel.app", // Allow only your frontend
+    credentials: true, // Allow cookies & authentication headers
+  })
+);
 
 // app.use(cors(
 //   {
@@ -39,12 +39,13 @@ const __dirname = path.dirname(__filename);
 //     credentials:true
 //   }
 // ));
+
 // app.use(cors({
 //   origin: process.env.CLIENT_URL,  // Replace with your actual frontend URL
 //   credentials: true,
 // }));
 
-app.use(cors())
+// app.use(cors())
 
 
 
