@@ -40,12 +40,12 @@ const __dirname = path.dirname(__filename);
 //   }
 // ));
 
-// app.use(cors({
-//   origin: process.env.CLIENT_URL,  // Replace with your actual frontend URL
-//   credentials: true,
-// }));
+app.use(cors({
+  origin: process.env.CLIENT_URL,  
+  credentials: true,
+}));
 
-app.use(cors());
+// app.use(cors());
 
 
 
