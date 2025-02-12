@@ -184,6 +184,7 @@ app.get("/api/userchats",protectRoute,async (req, res) => {
   try {
     const userChats = await UserChats.find({ userId : `${req.user.userId}` });
   // res.send([{_id:1,title:'chat1'},{_id:2,title:'chat2'}])
+  console.log('okkk',userChats)
     res.status(200).send(userChats[0]?.chats);
   } catch (err) {
     // console.log(err);

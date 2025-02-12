@@ -127,7 +127,9 @@ const NewPrompt = ({ data }) => {
   return (
     <>
       {/* ADD NEW CHAT */}
+      
       {img.isLoading && <div className="">Loading...</div>}
+      
       {img.dbData?.filePath && (
         <IKImage
           urlEndpoint={import.meta.env.VITE_IMAGE_KIT_ENDPOINT}
@@ -136,6 +138,7 @@ const NewPrompt = ({ data }) => {
           transformation={[{ width: 380 }]}
         />
       )}
+      
       {question && <div className="message user">{question}</div>}
       {answer && (
         <div className="message">
