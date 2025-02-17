@@ -96,7 +96,6 @@ app.post("/api/users/signup", async (req, res) => {
   }
 });
 
-// @route   POST /api/auth/login
 app.post("/api/users/login", async (req, res) => {
   try {
     const parsedData = loginSchema.parse(req.body);
@@ -128,7 +127,7 @@ app.post("/api/chats",protectRoute, async (req, res) => {
   const { text } = req.body;
 
   try {
-    // CREATE A NEW CHAT
+
     console.log('userId',userId)
     const newChat = new Chat({
       userId: userId,
@@ -137,10 +136,9 @@ app.post("/api/chats",protectRoute, async (req, res) => {
 
     const savedChat = await newChat.save();
 
-    // CHECK IF THE USERCHATS EXISTS
     const userChats = await UserChats.find({ userId: userId });
 
-    // IF DOESN'T EXIST CREATE A NEW ONE AND ADD THE CHAT IN THE CHATS ARRAY
+   
     if (!userChats.length) {
       const newUserChats = new UserChats({
         userId: userId,
@@ -154,7 +152,7 @@ app.post("/api/chats",protectRoute, async (req, res) => {
 
       await newUserChats.save();
     } else {
-      // IF EXISTS, PUSH THE CHAT TO THE EXISTING ARRAY
+   
       await UserChats.updateOne(
         { userId: userId },
         {
@@ -259,12 +257,6 @@ app.use((err, req, res, next) => {
   res.status(401).send("Unauthenticated!");
 });
 
-// PRODUCTION
-// app.use(express.static(path.join(__dirname, "../dist")));
-
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../dist", "index.html"));
-// });
 
 app.listen(port, () => {
   connect();

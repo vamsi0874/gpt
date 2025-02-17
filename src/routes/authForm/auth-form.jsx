@@ -6,7 +6,7 @@ import { useAuth } from "../../authContext/auth-context";
 import { useNavigate } from "react-router-dom";
 import "./authForm.css";
 
-// Validation Schema
+
 const signupSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email"),
@@ -35,15 +35,15 @@ const AuthForm = () => {
     // console.log(isSignup ? "Signup Data:" : "Login Data:", data);
     if(isSignup){
       // console.log(data)
-     await signup(data); // Store user in context
-      navigate("/dashboard"); // Redirect after login
+     await signup(data); 
+      navigate("/dashboard"); 
     }
     else{
       // console.log(data)
-      await login(data); // Store user in context
+      await login(data); 
     }
    
-    // navigate("/dashboard"); // Redirect after login
+    // navigate("/dashboard"); 
   };
 
   return (

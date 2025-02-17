@@ -1,10 +1,10 @@
-// Make sure to include these imports:
+
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 
 import { HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
 
-// ...
+
 
 const safetySettings = [
   {
