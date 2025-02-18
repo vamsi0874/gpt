@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
-import path from "path";
-import url, { fileURLToPath } from "url";
+
 import ImageKit from "imagekit";
 import mongoose from "mongoose";
 import Chat from "./models/chat.js";
@@ -21,29 +20,16 @@ dotenv.config();
 const port = process.env.PORT || 3000;
 const app = express();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-// console.log(__filename)
 
 
-// app.use(
-//   cors({
-//     origin: "https://gpt-front-two.vercel.app", // Allow only your frontend
-//     credentials: true, // Allow cookies & authentication headers
-//   })
-// );
 
-// app.use(cors(
-//   {
-//     origin:'http://localhost:5173/',
-//     credentials:true
-//   }
-// ));
 
-app.use(cors({
-  origin: process.env.CLIENT_URL,  
-  credentials: true,
-}));
+
+
+// app.use(cors({
+//   origin: process.env.CLIENT_URL,  
+//   credentials: true,
+// }));
 
 app.use(cors());
 
