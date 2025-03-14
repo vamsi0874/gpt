@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import "./homePage.css";
 import { TypeAnimation } from "react-type-animation";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../authContext/auth-context";
 
 const Homepage = () => {
   const [typingStatus, setTypingStatus] = useState("human1");
+  const {user} = useContext(AuthContext)
 
   return (
     <div className="homepage">
@@ -16,7 +18,7 @@ const Homepage = () => {
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Placeat sint
           dolorem doloribus, architecto dolor.
         </h3>
-        <Link to="/dashboard">Get Started</Link>
+        <Link to={`${user ? "/dashboard" : "/login"}`}>Get Started</Link>
       </div>
       <div className="right">
         <div className="imgContainer">

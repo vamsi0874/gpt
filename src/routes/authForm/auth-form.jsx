@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useAuth } from "../../authContext/auth-context";
+import { AuthContext, useAuth } from "../../authContext/auth-context";
 import { useNavigate } from "react-router-dom";
 import "./authForm.css";
 
@@ -31,21 +31,29 @@ const AuthForm = () => {
     resolver: zodResolver(isSignup ? signupSchema : loginSchema),
   });
 
+  const {user} = useContext(AuthContext)
+
   const onSubmit = async (data) => {
     // console.log(isSignup ? "Signup Data:" : "Login Data:", data);
     if(isSignup){
       // console.log(data)
      await signup(data); 
-      navigate("/dashboard"); 
+      
     }
     else{
       // console.log(data)
       await login(data); 
+   
+      
     }
    
-    // navigate("/dashboard"); 
+    navigate("/dashboard"); 
   };
 
+  if(user){
+    navigate("/dashboard");
+    return
+  }
   return (
     <div className="auth-container">
       <h2>{isSignup ? "Signup" : "Login"}</h2>
