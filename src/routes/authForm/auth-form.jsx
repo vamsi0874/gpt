@@ -33,6 +33,11 @@ const AuthForm = () => {
 
   const {user} = useContext(AuthContext)
 
+  if(user){
+    navigate("/dashboard");
+    return
+  }
+
   const onSubmit = async (data) => {
     // console.log(isSignup ? "Signup Data:" : "Login Data:", data);
     if(isSignup){
@@ -50,10 +55,6 @@ const AuthForm = () => {
     navigate("/dashboard"); 
   };
 
-  if(user){
-    navigate("/dashboard");
-    return
-  }
   return (
     <div className="auth-container">
       <h2>{isSignup ? "Signup" : "Login"}</h2>
