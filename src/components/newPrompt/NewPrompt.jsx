@@ -8,6 +8,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../services/api";
 
 const NewPrompt = ({ data }) => {
+  const [loading, setLoading] = useState(false);
+
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [img, setImg] = useState({
@@ -19,12 +21,12 @@ const NewPrompt = ({ data }) => {
   const chat = model.startChat({
     history: Array.isArray(data?.history) && data?.history.length
       ? data.history.map(({ role, parts }) => ({
-          role: role === "user" || role === "model" ? role : "user",  // Ensure role is either 'user' or 'model'
+          role: role === "user" || role === "model" ? role : "user",  
           parts: parts?.[0]?.text
             ? [{ text: parts[0].text }]
-            : [{ text: "No content provided" }], // Fallback text if none is provided
+            : [{ text: "No content provided" }], 
         }))
-      : [{ role: "user", parts: [{ text: "Start of the conversation" }] }], // Default entry if no history exists
+      : [{ role: "user", parts: [{ text: "Start of the conversation" }] }], 
     generationConfig: {
       // maxOutputTokens: 100,
     },
@@ -41,25 +43,13 @@ const NewPrompt = ({ data }) => {
 
   const mutation = useMutation({
     mutationFn: async () => {
-      // return fetch(`${import.meta.env.VITE_API_URL}/api/chats/${data._id}`, {
-      //   method: "PUT",
-      //   credentials: "include",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     question: question.length ? question : undefined,
-      //     answer,
-      //     img: img.dbData?.filePath || undefined,
-      //   }),
-      // }).then((res) => res.json());
       
         const response = await api.put(`/chats/${data._id}`, {
           question: question.length ? question : undefined,
           answer,
           img: img.dbData?.filePath || undefined,
         });
-        console.log("response", response.data);
+      
          return response.data
     },
 
@@ -85,7 +75,7 @@ const NewPrompt = ({ data }) => {
 
   const add = async (text, isInitial) => {
     if (!isInitial) setQuestion(text);
-
+    setLoading(true);
     try {
       const result = await chat.sendMessageStream(
         Object.entries(img.aiData).length ? [img.aiData, text] : [text]
@@ -93,12 +83,14 @@ const NewPrompt = ({ data }) => {
       let accumulatedText = "";
       for await (const chunk of result.stream) {
         const chunkText = chunk.text();
-        // console.log(chunkText);
+  
         accumulatedText += chunkText;
         setAnswer(accumulatedText);
       }
-      console.log(accumulatedText)
-      console.log(answer);
+      setLoading(false);
+      setAnswer(accumulatedText);
+      // console.log(accumulatedText)
+  
 
       mutation.mutate();
     } catch (err) {
@@ -115,7 +107,7 @@ const NewPrompt = ({ data }) => {
     add(text, false);
   };
 
-  // IN PRODUCTION WE DON'T NEED IT
+
   const hasRun = useRef(false);
 
   useEffect(() => {
@@ -129,7 +121,7 @@ const NewPrompt = ({ data }) => {
 
   return (
     <>
-      {/* ADD NEW CHAT */}
+     
       
       {img.isLoading && <div className="">Loading...</div>}
       
@@ -143,6 +135,8 @@ const NewPrompt = ({ data }) => {
       )}
       
       {question && <div className="message user">{question}</div>}
+      {loading && <div className="loading-msg">Generating response...</div>}
+
       {answer && (
         <div className="message">
           <Markdown>{answer}</Markdown>
