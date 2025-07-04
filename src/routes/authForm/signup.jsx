@@ -1,34 +1,27 @@
-import  { useContext, useState } from "react";
+
+import  { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+
 import { AuthContext, useAuth } from "../../authContext/auth-context";
 import { useNavigate } from "react-router-dom";
 import "./authForm.css";
+import { signupSchema } from "../../services/schema"; 
 
 
-const signupSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
 
-const loginSchema = z.object({
-  email: z.string().email("Invalid email"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
 
-const AuthForm = () => {
-  const [isSignup, setIsSignup] = useState(true);
-  const { login, signup } = useAuth();
+const SignupPage = () => {
+
+  const {  signup } = useAuth();
   const navigate = useNavigate();
   
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors , isSubmitting },
   } = useForm({
-    resolver: zodResolver(isSignup ? signupSchema : loginSchema),
+    resolver: zodResolver(signupSchema),
   });
 
   const {user} = useContext(AuthContext)
@@ -39,36 +32,34 @@ const AuthForm = () => {
   }
 
   const onSubmit = async (data) => {
-   
-    if(isSignup){
 
-     await signup(data); 
-      
-    }
-    else{
+       const res = await signup(data); 
    
-      await login(data); 
-   
-      
-    }
-   
-    navigate("/dashboard"); 
+        if(res){
+          navigate("/dashboard");
+        }
+ 
   };
 
   return (
     <div className="auth-container">
-      <h2>{isSignup ? "Signup" : "Login"}</h2>
+
+      <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">Signup</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="auth-form">
-        {isSignup && (
+     
           <div className="input-group">
-            <input {...register("name")} placeholder="Full Name" />
+            <input {...register("name")} 
+            
+            placeholder="Full Name" />
             {errors.name && <p className="error-message">{errors.name.message}</p>}
           </div>
-        )}
+      
 
         <div className="input-group">
-          <input {...register("email")} type="email" placeholder="Email" />
+          <input {...register("email")} type="email" 
+       
+          placeholder="Email" />
           {errors.email && <p className="error-message">{errors.email.message}</p>}
         </div>
 
@@ -78,18 +69,19 @@ const AuthForm = () => {
         </div>
 
         <button type="submit" className="auth-button">
-          {isSignup ? "Sign Up" : "Login"}
+          {isSubmitting ? "Signing up..." : "Sign Up"}
+
         </button>
       </form>
 
       <p className="toggle-text">
-        {isSignup ? "Already have an account?" : "Don't have an account?"}
-        <button onClick={() => setIsSignup(!isSignup)} className="toggle-button">
-          {isSignup ? "Login" : "Sign Up"}
+        Already have an account?
+        <button onClick={() => navigate('/login')} className="toggle-button">
+          Login
         </button>
       </p>
     </div>
   );
 };
 
-export default AuthForm;
+export default SignupPage;

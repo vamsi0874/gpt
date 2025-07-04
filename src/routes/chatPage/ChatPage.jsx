@@ -21,6 +21,7 @@ const ChatPage = () => {
       {
         // const response = await api.get(`/api/chats/${chatId}`);
         const response = await api.get(`/chats/${chatId}`);
+        
          return response.data
       }
   });

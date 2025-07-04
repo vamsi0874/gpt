@@ -12,6 +12,8 @@ import ProtectedRoute from "./ProtectRoute.jsx";
 import { AuthProvider } from "./authContext/auth-context.jsx";
 import AuthForm from "./routes/authForm/auth-form.jsx";
 import Homepage from "./routes/homepage/HomePage.jsx";
+import LoginPage from "./routes/authForm/login.jsx";
+import SignupPage from "./routes/authForm/signup.jsx";
 
 
 const router = createBrowserRouter([
@@ -24,11 +26,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <AuthForm />,
+        element: <LoginPage />,
       },
       {
         path: "/signup",
-        element: <AuthForm />,
+        element: <SignupPage />,
       },
       {
         element:( 

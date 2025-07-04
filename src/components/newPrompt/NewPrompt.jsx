@@ -59,6 +59,7 @@ const NewPrompt = ({ data }) => {
           answer,
           img: img.dbData?.filePath || undefined,
         });
+        console.log("response", response.data);
          return response.data
     },
 
