@@ -39,5 +39,5 @@ An advanced ChatGPT clone that supports **text and image-based conversations**, 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/chatgpt-clone.git
+git clone https://github.com/vamsi0874/chatgpt-clone.git
 ```
