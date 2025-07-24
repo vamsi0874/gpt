@@ -105,7 +105,7 @@
 //   );
 // }
 
-import  { useContext } from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -113,41 +113,40 @@ import { AuthContext, useAuth } from "../../authContext/auth-context";
 import { useNavigate } from "react-router-dom";
 import "./authForm.css";
 
-
-
 const loginSchema = z.object({
   email: z.string().email("Invalid email"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 const LoginPage = () => {
-
   const { login } = useAuth();
   const navigate = useNavigate();
-  
+
   const {
     register,
     handleSubmit,
-    formState: { errors,isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "v1@gmail.com",
+      password: "123456",
+    },
   });
 
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
 
-  if(user){
+  if (user) {
     navigate("/dashboard");
-    return
+    return;
   }
 
   const onSubmit = async (data) => {
-
-      const res = await login(data); 
-      console.log("Login Response:", res);
-      if(res){
-        navigate("/dashboard");
-      }
-      
+    const res = await login(data);
+    console.log("Login Response:", res);
+    if (res) {
+      navigate("/dashboard");
+    }
   };
 
   return (
@@ -155,7 +154,6 @@ const LoginPage = () => {
       <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">Login</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="auth-form">
-
         <div className="input-group">
           <input {...register("email")} type="email" placeholder="Email" />
           {errors.email && <p className="error-message">{errors.email.message}</p>}
